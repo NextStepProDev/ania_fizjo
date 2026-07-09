@@ -3,6 +3,7 @@ import { Inter, Poppins } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { BRAND, SITE_URL } from "@/lib/contact";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -16,12 +17,12 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: {
-    default: "fizjo4life — Rehabilitacja ortopedyczna i sportowa | Libiąż",
-    template: "%s | fizjo4life",
+    default: `${BRAND} — Rehabilitacja ortopedyczna i sportowa | Libiąż`,
+    template: `%s | ${BRAND}`,
   },
-  description:
-    "Gabinet fizjoterapii ortopedycznej i sportowej fizjo4life w Libiążu. Dbamy o zdrowie każdego pacjenta — fizjoterapia, gimnastyka korekcyjna, trening medyczny, kinesiotaping, masaż.",
+  description: `Gabinet fizjoterapii ortopedycznej i sportowej ${BRAND} w Libiążu. Dbamy o zdrowie każdego pacjenta — fizjoterapia, gimnastyka korekcyjna, trening medyczny, kinesiotaping, masaż.`,
 };
 
 export default function RootLayout({

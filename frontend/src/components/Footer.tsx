@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { CONTACT } from "@/lib/contact";
+import { BRAND, CONTACT } from "@/lib/contact";
 
 export default function Footer() {
   return (
@@ -8,7 +8,7 @@ export default function Footer() {
         <div>
           <Image
             src="/logo/logo-white.png"
-            alt="fizjo4life"
+            alt={BRAND}
             width={170}
             height={62}
           />
@@ -36,7 +36,7 @@ export default function Footer() {
 
       <div className="border-t border-paper/10">
         <p className="mx-auto max-w-6xl px-5 py-5 text-xs text-paper/40">
-          © {new Date().getFullYear()} fizjo4life. Wszelkie prawa zastrzeżone.
+          © {new Date().getFullYear()} {BRAND}. Wszelkie prawa zastrzeżone.
         </p>
       </div>
     </footer>

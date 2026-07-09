@@ -1,3 +1,10 @@
+/** Nazwa marki — klientka planuje rebranding, więc każde użycie nazwy w serwisie musi iść przez tę stałą */
+export const BRAND = "fizjo4life";
+
+/** Bazowy URL serwisu (sitemap, robots, canonical). Domena jeszcze nie kupiona — ustawić NEXT_PUBLIC_SITE_URL w env produkcyjnym */
+export const SITE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+
 export const CONTACT = {
   phoneDisplay: "600 711 725",
   phoneHref: "tel:+48600711725",

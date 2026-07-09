@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { getServices } from "@/lib/strapi";
+import { BRAND } from "@/lib/contact";
 import Reveal from "@/components/Reveal";
 
 export const metadata: Metadata = {
   title: "Oferta i cennik",
-  description:
-    "Oferta gabinetu fizjo4life w Libiążu — fizjoterapia ortopedyczna i sportowa, gimnastyka korekcyjna, trening medyczny, kinesiotaping, masaż. Sprawdź cennik.",
+  description: `Oferta gabinetu ${BRAND} w Libiążu — fizjoterapia ortopedyczna i sportowa, gimnastyka korekcyjna, trening medyczny, kinesiotaping, masaż. Sprawdź cennik.`,
 };
 
 export default async function OfertaPage() {

@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
+import { BRAND } from "@/lib/contact";
 
 const navLinks = [
   { href: "/", label: "Strona główna" },
@@ -23,7 +24,7 @@ export default function Header() {
         <Link href="/" onClick={() => setMenuOpen(false)}>
           <Image
             src="/logo/logo-black.png"
-            alt="fizjo4life — rehabilitacja ortopedyczna i sportowa"
+            alt={`${BRAND} — rehabilitacja ortopedyczna i sportowa`}
             width={160}
             height={58}
             preload

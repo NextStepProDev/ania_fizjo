@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { getStaff, strapiMediaUrl } from "@/lib/strapi";
+import { BRAND } from "@/lib/contact";
 import Reveal from "@/components/Reveal";
 
 export const metadata: Metadata = {
   title: "Zespół",
-  description:
-    "Poznaj zespół fizjo4life — doświadczonych fizjoterapeutów, którzy pomogą Ci wrócić do pełnej sprawności.",
+  description: `Poznaj zespół ${BRAND} — doświadczonych fizjoterapeutów, którzy pomogą Ci wrócić do pełnej sprawności.`,
 };
 
 export default async function ZespolPage() {

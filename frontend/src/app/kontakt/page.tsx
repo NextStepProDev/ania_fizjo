@@ -1,11 +1,10 @@
 import type { Metadata } from "next";
-import { CONTACT } from "@/lib/contact";
+import { BRAND, CONTACT } from "@/lib/contact";
 import Reveal from "@/components/Reveal";
 
 export const metadata: Metadata = {
   title: "Kontakt",
-  description:
-    "Skontaktuj się z gabinetem fizjo4life w Libiążu — umów wizytę telefonicznie lub napisz do nas.",
+  description: `Skontaktuj się z gabinetem ${BRAND} w Libiążu — umów wizytę telefonicznie lub napisz do nas.`,
 };
 
 export default function KontaktPage() {
@@ -86,7 +85,7 @@ export default function KontaktPage() {
           <div className="relative aspect-[4/3] overflow-hidden bg-paper-warm md:aspect-auto md:flex-1">
             <iframe
               src={CONTACT.mapsEmbedUrl}
-              title="Mapa dojazdu do gabinetu fizjo4life"
+              title={`Mapa dojazdu do gabinetu ${BRAND}`}
               className="absolute inset-0 h-full w-full border-0"
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
