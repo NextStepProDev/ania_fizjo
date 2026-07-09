@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { getStaff, strapiMediaUrl } from "@/lib/strapi";
+import Reveal from "@/components/Reveal";
 
 export const metadata: Metadata = {
   title: "Zespół",
@@ -21,8 +22,13 @@ export default async function ZespolPage() {
       </h1>
 
       <div className="mt-14 grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
-        {staff.map((member) => (
-          <article key={member.documentId}>
+        {staff.map((member, index) => (
+          <Reveal
+            key={member.documentId}
+            delay={index * 0.1}
+            className="group"
+          >
+            <article>
             <div className="relative aspect-[3/4] overflow-hidden bg-paper-warm">
               {member.photo && (
                 <Image
@@ -32,7 +38,7 @@ export default async function ZespolPage() {
                   alt={member.photo.alternativeText ?? member.fullName}
                   fill
                   sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-                  className="object-cover"
+                  className="object-cover transition-transform duration-500 group-hover:scale-105"
                 />
               )}
             </div>
@@ -47,7 +53,8 @@ export default async function ZespolPage() {
                 {member.bio}
               </p>
             )}
-          </article>
+            </article>
+          </Reveal>
         ))}
       </div>
     </section>

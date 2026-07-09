@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import Reveal from "@/components/Reveal";
 
 const services = [
   "Fizjoterapia ortopedyczna",
@@ -14,7 +15,7 @@ export default function Home() {
   return (
     <>
       <section className="mx-auto grid max-w-6xl items-center gap-12 px-5 py-16 md:grid-cols-2 md:py-24">
-        <div>
+        <Reveal>
           <p className="font-display text-sm font-medium uppercase tracking-[0.2em] text-accent">
             Gabinet fizjoterapii ortopedycznej i sportowej
           </p>
@@ -41,9 +42,9 @@ export default function Home() {
               Zobacz ofertę
             </Link>
           </div>
-        </div>
+        </Reveal>
 
-        <div className="relative aspect-[4/3] overflow-hidden">
+        <Reveal delay={0.15} className="relative aspect-[4/3] overflow-hidden">
           <Image
             src="/images/hero.jpg"
             alt="Fizjoterapeutka podczas pracy z pacjentem"
@@ -52,20 +53,22 @@ export default function Home() {
             className="object-cover"
             preload
           />
-        </div>
+        </Reveal>
       </section>
 
       <section className="border-y border-line bg-paper-warm">
-        <ul className="mx-auto grid max-w-6xl grid-cols-2 gap-x-6 gap-y-4 px-5 py-10 sm:grid-cols-3 md:grid-cols-6">
-          {services.map((service) => (
-            <li
-              key={service}
-              className="text-center font-display text-sm font-medium tracking-wide text-ink-soft"
-            >
-              {service}
-            </li>
-          ))}
-        </ul>
+        <Reveal delay={0.1}>
+          <ul className="mx-auto grid max-w-6xl grid-cols-2 gap-x-6 gap-y-4 px-5 py-10 sm:grid-cols-3 md:grid-cols-6">
+            {services.map((service) => (
+              <li
+                key={service}
+                className="text-center font-display text-sm font-medium tracking-wide text-ink-soft"
+              >
+                {service}
+              </li>
+            ))}
+          </ul>
+        </Reveal>
       </section>
     </>
   );

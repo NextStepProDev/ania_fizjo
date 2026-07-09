@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { CONTACT } from "@/lib/contact";
+import Reveal from "@/components/Reveal";
 
 export const metadata: Metadata = {
   title: "Kontakt",
@@ -18,7 +19,7 @@ export default function KontaktPage() {
       </h1>
 
       <div className="mt-14 grid gap-12 md:grid-cols-2">
-        <div>
+        <Reveal>
           <dl className="space-y-8">
             <div>
               <dt className="font-display text-sm font-semibold uppercase tracking-wide text-ink-muted">
@@ -79,9 +80,9 @@ export default function KontaktPage() {
               </a>
             )}
           </div>
-        </div>
+        </Reveal>
 
-        <div className="flex flex-col">
+        <Reveal delay={0.15} className="flex flex-col">
           <div className="relative aspect-[4/3] overflow-hidden bg-paper-warm md:aspect-auto md:flex-1">
             <iframe
               src={CONTACT.mapsEmbedUrl}
@@ -100,7 +101,7 @@ export default function KontaktPage() {
           >
             Otwórz w Mapach Google
           </a>
-        </div>
+        </Reveal>
       </div>
     </section>
   );

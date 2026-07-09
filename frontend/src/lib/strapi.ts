@@ -27,6 +27,15 @@ export interface StaffMember {
   photo: StrapiImage | null;
 }
 
+export interface Service {
+  id: number;
+  documentId: string;
+  name: string;
+  description: string | null;
+  price: string;
+  order: number;
+}
+
 interface StrapiListResponse<T> {
   data: T[];
 }
@@ -45,5 +54,16 @@ export async function getStaff(): Promise<StaffMember[]> {
     throw new Error(`Strapi request failed: ${res.status}`);
   }
   const json: StrapiListResponse<StaffMember> = await res.json();
+  return json.data;
+}
+
+export async function getServices(): Promise<Service[]> {
+  const res = await fetch(`${STRAPI_URL}/api/services?sort=order:asc`, {
+    next: { revalidate: 60 },
+  });
+  if (!res.ok) {
+    throw new Error(`Strapi request failed: ${res.status}`);
+  }
+  const json: StrapiListResponse<Service> = await res.json();
   return json.data;
 }
