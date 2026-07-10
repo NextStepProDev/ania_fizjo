@@ -44,7 +44,7 @@ export default function WspolpracaPage() {
             as="li"
             key={audience.name}
             delay={index * 0.1}
-            className="border border-line bg-paper-warm p-8 transition-colors duration-300 hover:border-ink"
+            className="border border-line bg-paper-warm p-8 transition-all duration-300 hover:border-accent hover:shadow-[0_16px_48px_-16px_color-mix(in_srgb,var(--color-accent)_35%,transparent)]"
           >
             <span className="font-display text-sm font-semibold tracking-[0.2em] text-accent">
               {String(index + 1).padStart(2, "0")}

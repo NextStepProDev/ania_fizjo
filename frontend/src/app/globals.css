@@ -1,26 +1,31 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #161616;
+  --background: #f4eee4;
+  --foreground: #2b241c;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
 
-  /* Brand: minimalist gray/black/white with a red accent (from fizjo4life materials) */
-  --color-ink: #161616;
-  --color-ink-soft: #4b4b4b;
-  --color-ink-muted: #8a8a8a;
-  --color-paper: #ffffff;
-  --color-paper-warm: #f6f6f5;
-  --color-line: #e6e6e4;
-  --color-accent: #cf3a30;
-  --color-accent-dark: #b02f27;
+  /* Brand: warm beige boutique-wellness palette with amber "light" accents.
+     Light surfaces read as decorative plaster; dark ones as an evening studio. */
+  --color-ink: #2b241c;
+  --color-ink-soft: #5c5246;
+  --color-ink-muted: #94897a;
+  --color-paper: #f4eee4;
+  --color-paper-warm: #eae0d1;
+  --color-line: #ded2bf;
+  --color-espresso: #362a1e;
+  --color-espresso-soft: #423225;
+  --color-espresso-deep: #251b11;
+  --color-accent: #9c6b33;
+  --color-accent-dark: #7f5527;
+  --color-glow: #e9c795;
 
   --font-sans: var(--font-inter);
-  --font-display: var(--font-poppins);
+  --font-display: var(--font-fraunces);
 
   --animate-menu-in: menu-in 0.25s ease-out;
 
@@ -40,6 +45,13 @@
   html {
     scroll-behavior: smooth;
   }
+}
+
+html {
+  /* Match the beige theme in overscroll areas and the scrollbar track —
+     the default white track reads as a stray stripe next to dark sections. */
+  background-color: var(--background);
+  scrollbar-color: var(--color-ink-muted) var(--background);
 }
 
 body {
@@ -68,13 +80,20 @@ p {
 }
 
 @layer components {
-  /* Small uppercase section label with a leading accent rule. */
+  /* Small uppercase section label with a glowing LED-style leading rule. */
   .kicker {
     @apply flex items-center gap-3 font-display text-sm font-medium uppercase tracking-[0.2em] text-accent;
   }
   .kicker::before {
     content: "";
-    @apply h-px w-8 bg-accent;
+    @apply h-px w-8;
+    background: linear-gradient(90deg, transparent, currentColor);
+    box-shadow: 0 0 10px 0 color-mix(in srgb, currentColor 70%, transparent);
+  }
+
+  /* Dark "evening studio" section: espresso surface, light text. */
+  .section-dark {
+    @apply bg-espresso text-paper;
   }
 
   .btn {
@@ -82,8 +101,37 @@ p {
   }
   .btn-primary {
     @apply bg-accent text-paper hover:bg-accent-dark;
+    box-shadow: 0 0 32px -4px color-mix(in srgb, var(--color-glow) 45%, transparent);
   }
   .btn-outline {
     @apply border border-ink text-ink hover:bg-ink hover:text-paper;
+  }
+  /* Outline button for dark sections. */
+  .btn-outline-light {
+    @apply border border-paper/40 text-paper hover:border-paper hover:bg-paper hover:text-ink;
+  }
+}
+
+@layer utilities {
+  /* Subtle plaster-like noise for dark sections. */
+  .grain {
+    position: relative;
+  }
+  .grain::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.04;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* Warm ambient halo — the backlit-wall effect from the moodboard. */
+  .halo {
+    background: radial-gradient(
+      ellipse 60% 50% at 50% 40%,
+      color-mix(in srgb, var(--color-glow) 20%, transparent),
+      transparent 70%
+    );
   }
 }
