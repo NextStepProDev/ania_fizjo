@@ -1,0 +1,130 @@
+services:
+  # Budżet pamięci: serwer to Oracle E2.1.Micro z 1 GB RAM. Suma limitów
+  # (192+384+224+32 = 832 MB) zostawia ~190 MB na system i dockera; resztę
+  # dociąża 2 GB swap z setup-swap.sh (bez niego stack nie wstanie).
+  postgres:
+    image: postgres:16-alpine
+    container_name: fizjo-postgres-prod
+    mem_limit: 192m
+    command:
+      - "postgres"
+      - "-c"
+      - "shared_buffers=24MB"
+      - "-c"
+      - "work_mem=2MB"
+      - "-c"
+      - "effective_cache_size=64MB"
+      - "-c"
+      - "random_page_cost=1.1"
+      - "-c"
+      - "max_connections=20"
+      - "-c"
+      - "maintenance_work_mem=16MB"
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - fizjo_postgres_data_prod:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  strapi:
+    image: ghcr.io/${GHCR_OWNER}/ania-fizjo-backend:${VERSION:-latest}
+    container_name: fizjo-strapi-prod
+    mem_limit: 384m
+    environment:
+      NODE_ENV: production
+      # Trzymaj stertę V8 wyraźnie pod mem_limit — lepszy GC niż OOM-kill
+      NODE_OPTIONS: "--max-old-space-size=300"
+      DATABASE_CLIENT: postgres
+      DATABASE_HOST: postgres
+      DATABASE_PORT: 5432
+      DATABASE_NAME: ${POSTGRES_DB}
+      DATABASE_USERNAME: ${POSTGRES_USER}
+      DATABASE_PASSWORD: ${POSTGRES_PASSWORD}
+      DATABASE_SSL: "false"
+      APP_KEYS: ${APP_KEYS}
+      API_TOKEN_SALT: ${API_TOKEN_SALT}
+      ADMIN_JWT_SECRET: ${ADMIN_JWT_SECRET}
+      TRANSFER_TOKEN_SALT: ${TRANSFER_TOKEN_SALT}
+      JWT_SECRET: ${JWT_SECRET}
+      ENCRYPTION_KEY: ${ENCRYPTION_KEY}
+      # Public origin of the Strapi API/admin (e.g. https://api.example.pl)
+      PUBLIC_URL: ${STRAPI_PUBLIC_URL}
+      IS_PROXIED: "true"
+      TZ: Europe/Warsaw
+    volumes:
+      - fizjo_uploads_prod:/app/public/uploads
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q --spider http://127.0.0.1:1337/_health || exit 1"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 60s
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "20m"
+        max-file: "3"
+
+  frontend:
+    image: ghcr.io/${GHCR_OWNER}/ania-fizjo-frontend:${VERSION:-latest}
+    container_name: fizjo-frontend-prod
+    mem_limit: 224m
+    environment:
+      # Trzymaj stertę V8 wyraźnie pod mem_limit; zapas na sharp (optymalizacja obrazów)
+      NODE_OPTIONS: "--max-old-space-size=160"
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q --spider http://127.0.0.1:3000/ || exit 1"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    depends_on:
+      strapi:
+        condition: service_healthy
+    restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  nginx:
+    image: nginx:1.27-alpine
+    container_name: fizjo-nginx-prod
+    mem_limit: 32m
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./certs:/etc/nginx/certs:ro
+      - ./certbot-www:/var/www/certbot:ro
+    depends_on:
+      - frontend
+      - strapi
+    restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+volumes:
+  fizjo_postgres_data_prod:
+  fizjo_uploads_prod:
