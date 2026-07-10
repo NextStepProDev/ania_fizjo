@@ -28,7 +28,7 @@ export default async function ZespolPage() {
             className="group"
           >
             <article>
-            <div className="relative aspect-[3/4] overflow-hidden bg-paper-warm">
+            <div className="relative aspect-[3/4] overflow-hidden bg-paper-warm ring-1 ring-line shadow-[0_24px_60px_-24px_color-mix(in_srgb,var(--color-accent)_45%,transparent)]">
               {member.photo && (
                 <Image
                   src={strapiMediaUrl(

@@ -14,46 +14,45 @@ const services = [
 export default function Home() {
   return (
     <>
-      <section className="mx-auto grid max-w-6xl items-center gap-12 px-5 py-16 md:grid-cols-2 md:py-24">
-        <Reveal>
-          <p className="kicker">
-            Gabinet fizjoterapii ortopedycznej i sportowej
-          </p>
-          <h1 className="mt-4 font-display text-4xl font-semibold leading-tight tracking-tight text-ink md:text-5xl">
-            Ruch to życie.
-            <br />
-            Pomożemy Ci do niego wrócić.
-          </h1>
-          <p className="mt-6 max-w-md text-lg leading-8 text-ink-soft">
-            Dbamy o zdrowie każdego pacjenta. Indywidualne podejście,
-            nowoczesne metody i doświadczenie, któremu możesz zaufać.
-          </p>
-          <div className="mt-10 flex flex-col gap-4 sm:flex-row">
-            <Link href="/kontakt" className="btn btn-primary">
-              Umów wizytę
-            </Link>
-            <Link href="/oferta" className="btn btn-outline">
-              Zobacz ofertę
-            </Link>
-          </div>
-        </Reveal>
+      <section className="section-dark grain relative overflow-hidden">
+        <div aria-hidden className="halo absolute inset-0" />
+        <div className="relative mx-auto grid max-w-6xl items-center gap-12 px-5 py-16 md:grid-cols-2 md:py-24">
+          <Reveal>
+            <p className="kicker text-glow">
+              Gabinet fizjoterapii ortopedycznej i sportowej
+            </p>
+            <h1 className="mt-4 font-display text-4xl font-semibold leading-tight tracking-tight md:text-5xl">
+              Ruch to życie.
+              <br />
+              Pomożemy Ci do niego wrócić.
+            </h1>
+            <p className="mt-6 max-w-md text-lg leading-8 text-paper/70">
+              Dbamy o zdrowie każdego pacjenta. Indywidualne podejście,
+              nowoczesne metody i doświadczenie, któremu możesz zaufać.
+            </p>
+            <div className="mt-10 flex flex-col gap-4 sm:flex-row">
+              <Link href="/kontakt" className="btn btn-primary">
+                Umów wizytę
+              </Link>
+              <Link href="/oferta" className="btn btn-outline-light">
+                Zobacz ofertę
+              </Link>
+            </div>
+          </Reveal>
 
-        <Reveal delay={0.15} className="relative">
-          <div
-            aria-hidden
-            className="absolute inset-0 translate-x-4 translate-y-4 border border-line bg-paper-warm md:translate-x-6 md:translate-y-6"
-          />
-          <div className="relative aspect-[4/3] overflow-hidden">
-            <Image
-              src="/images/hero.jpg"
-              alt="Fizjoterapeutka podczas pracy z pacjentem"
-              fill
-              sizes="(min-width: 768px) 50vw, 100vw"
-              className="object-cover"
-              preload
-            />
-          </div>
-        </Reveal>
+          <Reveal delay={0.15}>
+            <div className="relative aspect-[4/3] overflow-hidden border border-glow/25 shadow-[0_0_80px_-10px_color-mix(in_srgb,var(--color-glow)_35%,transparent)]">
+              <Image
+                src="/images/hero.jpg"
+                alt="Fizjoterapeutka podczas pracy z pacjentem"
+                fill
+                sizes="(min-width: 768px) 50vw, 100vw"
+                className="object-cover"
+                preload
+              />
+            </div>
+          </Reveal>
+        </div>
       </section>
 
       <section className="border-y border-line bg-paper-warm">

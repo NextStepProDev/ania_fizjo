@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Poppins } from "next/font/google";
+import { Inter, Fraunces } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -10,9 +10,8 @@ const inter = Inter({
   subsets: ["latin", "latin-ext"],
 });
 
-const poppins = Poppins({
-  variable: "--font-poppins",
-  weight: ["400", "500", "600", "700"],
+const fraunces = Fraunces({
+  variable: "--font-fraunces",
   subsets: ["latin", "latin-ext"],
 });
 
@@ -33,11 +32,15 @@ export default function RootLayout({
   return (
     <html
       lang="pl"
-      className={`${inter.variable} ${poppins.variable} h-full antialiased`}
+      className={`${inter.variable} ${fraunces.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
         <Header />
-        <main className="flex-1">{children}</main>
+        {/* min-h pushes the footer below the fold on short pages (100svh minus the 82px
+            sticky header); flex lets full-bleed page sections grow into the leftover space. */}
+        <main className="flex min-h-[calc(100svh-82px)] flex-1 flex-col">
+          {children}
+        </main>
         <Footer />
       </body>
     </html>

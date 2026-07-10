@@ -21,7 +21,10 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-line bg-paper/90 backdrop-blur-md">
-      <div aria-hidden className="h-0.5 bg-accent" />
+      <div
+        aria-hidden
+        className="h-0.5 bg-gradient-to-r from-transparent via-glow to-transparent"
+      />
       <div className="mx-auto flex h-20 max-w-6xl items-center justify-between px-5">
         <Link
           href="/"

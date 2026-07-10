@@ -1,30 +1,15 @@
 import Image from "next/image";
-import Link from "next/link";
 import { BRAND, CONTACT } from "@/lib/contact";
 
 export default function Footer() {
   return (
-    <footer className="bg-ink text-paper">
-      <div className="border-b border-paper/10">
-        <div className="mx-auto flex max-w-6xl flex-col items-start justify-between gap-8 px-5 py-16 md:flex-row md:items-center">
-          <h2 className="max-w-xl font-display text-3xl font-semibold leading-tight tracking-tight md:text-4xl">
-            Wróćmy razem do pełnej sprawności.
-          </h2>
-          <div className="flex shrink-0 flex-col items-start gap-3">
-            <Link href="/kontakt" className="btn btn-primary">
-              Umów wizytę
-            </Link>
-            <a
-              href={CONTACT.phoneHref}
-              className="font-display text-sm tracking-wide text-paper/60 transition-colors hover:text-paper"
-            >
-              lub zadzwoń: {CONTACT.phoneDisplay}
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <div className="mx-auto flex max-w-6xl flex-col gap-10 px-5 py-14 md:flex-row md:items-start md:justify-between">
+    <footer className="grain relative overflow-hidden bg-espresso-deep text-paper">
+      <div
+        aria-hidden
+        className="h-0.5 bg-gradient-to-r from-transparent via-glow to-transparent"
+      />
+      <div aria-hidden className="halo absolute inset-0" />
+      <div className="relative mx-auto flex max-w-6xl flex-col gap-10 px-5 py-14 md:flex-row md:items-start md:justify-between">
         <div>
           <Image
             src="/logo/logo-white.png"
@@ -43,18 +28,18 @@ export default function Footer() {
           <p className="mt-3 text-paper/70">
             {CONTACT.addressStreet}, {CONTACT.addressCity}
             <br />
-            <a href={CONTACT.phoneHref} className="hover:text-accent">
+            <a href={CONTACT.phoneHref} className="hover:text-glow">
               {CONTACT.phoneDisplay}
             </a>
             <br />
-            <a href={`mailto:${CONTACT.email}`} className="hover:text-accent">
+            <a href={`mailto:${CONTACT.email}`} className="hover:text-glow">
               {CONTACT.email}
             </a>
           </p>
         </div>
       </div>
 
-      <div className="border-t border-paper/10">
+      <div className="relative border-t border-paper/10">
         <p className="mx-auto max-w-6xl px-5 py-5 text-xs text-paper/40">
           © {new Date().getFullYear()} {BRAND}. Wszelkie prawa zastrzeżone.
         </p>
