@@ -25,10 +25,19 @@ const LOCATIONS: {
  */
 export default function OfferLocationTabs({ services }: { services: Service[] }) {
   const [active, setActive] = useState<TabId>("libiaz");
+  const [expanded, setExpanded] = useState<Set<string>>(new Set());
   const filtered = services.filter(
     (s) => s.location === active || s.location === "oba",
   );
   const activeLoc = LOCATIONS.find((loc) => loc.id === active)!;
+
+  const toggle = (id: string) =>
+    setExpanded((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
 
   return (
     <div className="mt-12">
@@ -74,32 +83,52 @@ export default function OfferLocationTabs({ services }: { services: Service[] })
           key={active}
           className="mt-12 divide-y divide-line border-y border-line"
         >
-          {filtered.map((service, index) => (
-            <Reveal
-              key={service.documentId}
-              as="li"
-              delay={index * 0.08}
-              className="py-6"
-            >
-              <div className="flex items-baseline justify-between gap-4">
-                <h2 className="font-display text-lg font-semibold">
-                  {service.name}
-                </h2>
-                <span
-                  aria-hidden
-                  className="hidden flex-1 border-b border-dotted border-ink/20 sm:block"
-                />
-                <p className="shrink-0 font-display text-lg font-semibold tabular-nums text-accent">
-                  {service.price}
-                </p>
-              </div>
-              {service.description && (
-                <p className="mt-1 max-w-xl text-sm leading-6 text-ink-soft">
-                  {service.description}
-                </p>
-              )}
-            </Reveal>
-          ))}
+          {filtered.map((service, index) => {
+            const isOpen = expanded.has(service.documentId);
+            const panelId = `service-desc-${service.documentId}`;
+            return (
+              <Reveal
+                key={service.documentId}
+                as="li"
+                delay={index * 0.08}
+                className="py-6"
+              >
+                <div className="flex items-baseline justify-between gap-4">
+                  <h2 className="font-display text-lg font-semibold">
+                    {service.name}
+                  </h2>
+                  <span
+                    aria-hidden
+                    className="hidden flex-1 border-b border-dotted border-ink/20 sm:block"
+                  />
+                  <p className="shrink-0 font-display text-lg font-semibold tabular-nums text-accent">
+                    {service.price}
+                  </p>
+                </div>
+                {service.description && (
+                  <>
+                    <button
+                      type="button"
+                      onClick={() => toggle(service.documentId)}
+                      aria-expanded={isOpen}
+                      aria-controls={panelId}
+                      className="mt-2 text-sm font-medium text-accent transition-colors hover:text-ink"
+                    >
+                      {isOpen ? "Zwiń" : "Czytaj więcej"}
+                    </button>
+                    {isOpen && (
+                      <p
+                        id={panelId}
+                        className="mt-2 max-w-xl text-sm leading-6 text-ink-soft"
+                      >
+                        {service.description}
+                      </p>
+                    )}
+                  </>
+                )}
+              </Reveal>
+            );
+          })}
         </ul>
       )}
     </div>
