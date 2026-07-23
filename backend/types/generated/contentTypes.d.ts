@@ -490,6 +490,8 @@ export interface ApiServiceService extends Struct.CollectionTypeSchema {
       'api::service.service'
     > &
       Schema.Attribute.Private;
+    location: Schema.Attribute.Enumeration<['libiaz', 'katowice', 'oba']> &
+      Schema.Attribute.Required;
     name: Schema.Attribute.String & Schema.Attribute.Required;
     order: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
     price: Schema.Attribute.String & Schema.Attribute.Required;
@@ -512,6 +514,7 @@ export interface ApiStaffStaff extends Struct.CollectionTypeSchema {
   };
   attributes: {
     bio: Schema.Attribute.Text;
+    courses: Schema.Attribute.Text;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
