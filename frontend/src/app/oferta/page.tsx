@@ -33,25 +33,28 @@ export default async function OfertaPage() {
             </p>
           </Reveal>
 
-          {/* PLACEHOLDER: kadr ze ściany + wazonem wycięty z renderu klienta
-              (public/images/oferta-hero.jpg). Źródło ma tylko 850px, więc obraz
-              jest miękki — podmienić na eksport renderu w wysokiej rozdzielczości,
-              bez interfejsu. Widoczny też na mobile (pod tekstem, pełna szerokość,
-              naturalne proporcje); na desktopie po prawej ze stałą wysokością. */}
+          {/* Szeroki kadr ze ściany + wazonem i pełnym logo ANOVA STUDIO, wycięty
+              z renderu klienta w hi-res (public/images/oferta-hero.jpg,
+              1536×924). Na mobile widoczny cały (pod tekstem, pełna szerokość,
+              naturalne proporcje). Na desktopie stała wysokość + object-cover
+              przycina boki, dlatego object-position 75%: kadr przesunięty w prawo
+              tak, że logo dostaje margines pustej ściany i nie ląduje na krawędzi
+              (gdzie zjadałaby je prawa winieta), a wazon nadal widoczny. */}
           <img
             src="/images/oferta-hero.jpg"
             alt=""
             aria-hidden
-            className="h-auto w-full object-cover object-center md:h-[26rem]"
+            className="h-auto w-full object-cover object-[75%_center] md:h-[26rem]"
             style={{
               // Miękka winieta wtapiająca obraz w tło .plaster ze WSZYSTKICH stron
-              // (lewa mocniej) — dzięki temu jeden zestaw masek działa i po prawej
+              // (prawa najszerzej, 42% — logo/ściana łagodnie rozpływają się w tle;
+              // lewa 20%) — dzięki temu jeden zestaw masek działa i po prawej
               // (desktop), i pod tekstem (mobile). intersect = maski się przecinają
               // (każda przycina), zamiast domyślnego sumowania widocznego obszaru.
               maskImage:
-                "linear-gradient(to right, transparent, #000 20%), linear-gradient(to left, transparent, #000 12%), linear-gradient(to bottom, transparent, #000 12%), linear-gradient(to top, transparent, #000 16%)",
+                "linear-gradient(to right, transparent, #000 20%), linear-gradient(to left, transparent, #000 42%), linear-gradient(to bottom, transparent, #000 12%), linear-gradient(to top, transparent, #000 16%)",
               WebkitMaskImage:
-                "linear-gradient(to right, transparent, #000 20%), linear-gradient(to left, transparent, #000 12%), linear-gradient(to bottom, transparent, #000 12%), linear-gradient(to top, transparent, #000 16%)",
+                "linear-gradient(to right, transparent, #000 20%), linear-gradient(to left, transparent, #000 42%), linear-gradient(to bottom, transparent, #000 12%), linear-gradient(to top, transparent, #000 16%)",
               maskComposite: "intersect",
               WebkitMaskComposite: "source-in",
             }}
